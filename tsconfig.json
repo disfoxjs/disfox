@@ -37,7 +37,7 @@
     "src/public/modules/filemanage.ts",
     "src/public/modules/pathmanage.ts",
     "src/index.ts"
-  ],
+],
   "exclude": [
     "node_modules",
     "dist",
