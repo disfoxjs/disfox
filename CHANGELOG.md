@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.1.3] - 2026-08-14
+### Fixed
+- Fix the NPM disfox website to https://disfox.netlify.app in package.json
+
 ## [0.1.2] - 2026-08-14
 
 ### Fixed

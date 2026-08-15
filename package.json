@@ -1,6 +1,6 @@
 {
   "name": "disfox",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Modern framework for Discord.js with automated structure.",
   "type": "module",
   "main": "dist/index.js",
@@ -35,7 +35,7 @@
   ],
   "author": "xFoxyyy0",
   "license": "MIT",
-  "homepage": "https://disfox.netlify.app",
+  "homepage": "https://disfox.js.org",
   "repository": {
     "type": "git",
     "url": "https://github.com/DisfoxJS/Disfox"
