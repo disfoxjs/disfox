@@ -1,6 +1,6 @@
-import { ApplicationAction } from "../../structures/applicationAction.js";
-import { ApplicationEvents } from "../../structures/applicationEvents.js";
-import { ApplicationSlash } from "../../structures/applicationSlash.js";
+import { ApplicationAction } from "../../structs/applicationAction.js";
+import { ApplicationEvents } from "../../structs/applicationEvents.js";
+import { ApplicationSlash } from "../../structs/applicationSlash.js";
 import { Client } from "discord.js";
 interface SettingsType {
     client: Client;

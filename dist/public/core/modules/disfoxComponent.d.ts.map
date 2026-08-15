@@ -1,0 +1,1 @@
+{"version":3,"file":"disfoxComponent.d.ts","sourceRoot":"","sources":["../../../../src/public/core/modules/disfoxComponent.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,yBAAyB,EAAE,MAAM,gCAAgC,CAAC;AAE3E,qBAAa,eAAe;IACxB,UAAU,EAAE,yBAAyB,GAAG,IAAI,CAAO;IACnD,eAAe,EAAE,OAAO,CAAS;IACjC,WAAW,EAAE,OAAO,CAAS;;CAKhC"}

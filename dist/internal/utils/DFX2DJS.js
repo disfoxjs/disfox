@@ -1,7 +1,7 @@
-import { SlashOptions } from "../../public/index.js";
-import { Command } from "../../public/structures/command.js";
-import { DisfoxErrorCode } from "../errors/_disfox.errorCode.js";
-import { DisfoxError } from "../errors/_disfoxerror.js";
+import { SlashOptions } from "../../../new/public/index.js";
+import { Command } from "../../../new/public/structures/command.js";
+import { DisfoxErrorCode } from "../../../new/internal/errors/_disfox.errorCode.js";
+import { DisfoxError } from "../../../new/internal/errors/_disfoxerror.js";
 import { SlashCommandBuilder } from "discord.js";
 export function _Dfx2DjsC(command) {
     if (!(command instanceof Command)) {

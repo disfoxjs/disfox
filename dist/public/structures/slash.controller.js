@@ -10,9 +10,9 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
 var _SlashController_client, _SlashController_globalSlash, _SlashController_guildSlash;
-import { DisfoxErrorCode } from "../errors//_disfox.errorCode.js";
-import { DisfoxError } from "../errors/_disfoxerror.js";
-import { Response } from "../core/builders/response.js";
+import { DisfoxErrorCode } from "../../../new/public/errors/_disfox.errorCode.js";
+import { DisfoxError } from "../../../new/public/errors/_disfoxerror.js";
+import { Response } from "../../../new/public/core/builders/response.js";
 export class SlashController {
     constructor(client) {
         _SlashController_client.set(this, void 0);

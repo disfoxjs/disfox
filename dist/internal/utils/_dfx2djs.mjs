@@ -1,8 +1,14 @@
-import { SlashOptions, SlashTag } from "../../public/index.js";
+import { SlashOptionType } from "./../../public/structures/slashOptions.js";
+import { SlashTag } from "../../public/enums/slashTag.js";
 import { Command } from "../../public/structures/slashServiceCommand.js";
 import { DisfoxErrorCode } from "../../public/errors/_disfox.errorCode.js";
 import { DisfoxError } from "../../public/errors/_disfoxerror.js";
 import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
+const methodMap = {
+    [SlashOptionType.String]: "addStringOption",
+    [SlashOptionType.Number]: "addNumberOption",
+    [SlashOptionType.Boolean]: "addBooleanOption",
+};
 export function dfx2djsC(command) {
     if (!(command instanceof Command)) {
         throw new DisfoxError({
@@ -47,16 +53,8 @@ export function dfx2djsC(command) {
                 });
             }
             ;
-            if (data.inputType === SlashOptions.String) {
-                DJSCommand.addStringOption(op => {
-                    op.setName(data.name);
-                    op.setDescription(data.inputDescription);
-                    op.setRequired(data.isRequired);
-                    return op;
-                });
-            }
-            ;
-            if (data.inputType === SlashOptions.Number) {
+            const method = methodMap[data.inputType];
+            if (data.inputType === SlashOptionType.Number) {
                 DJSCommand.addNumberOption(op => {
                     if (typeof data.settings.minNumber === `number`)
                         op.setMinValue(data.settings.minNumber);
@@ -68,35 +66,6 @@ export function dfx2djsC(command) {
                 });
             }
             ;
-            if (data.inputType == SlashOptions.Mentionable) {
-                DJSCommand.addMentionableOption(input => {
-                    input.setName(data.name).setDescription(data.inputDescription);
-                    input.setRequired(data.isRequired);
-                    return input;
-                });
-            }
-            ;
-            if (data.inputType == SlashOptions.Boolean) {
-                DJSCommand.addBooleanOption(input => {
-                    input.setName(data.name).setDescription(data.inputDescription);
-                    input.setRequired(data.isRequired);
-                    return input;
-                });
-            }
-            if (data.inputType == SlashOptions.Role) {
-                DJSCommand.addRoleOption(input => {
-                    input.setName(data.name).setDescription(data.inputDescription);
-                    input.setRequired(data.isRequired);
-                    return input;
-                });
-            }
-            if (data.inputType == SlashOptions.Attachment) {
-                DJSCommand.addAttachmentOption(input => {
-                    input.setName(data.name).setDescription(data.inputDescription);
-                    input.setRequired(data.isRequired);
-                    return input;
-                });
-            }
         }
     }
     ;

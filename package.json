@@ -1,31 +1,64 @@
 {
   "name": "disfox",
-  "version": "0.0.7",
+  "version": "0.1.2",
+  "description": "Modern framework for Discord.js with automated structure.",
+  "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "type": "module",
-  "files": [
-    "dist",
-    "CHANGELOG.md"
-  ],
   "exports": {
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     }
   },
+  "files": [
+    "dist",
+    "CHANGELOG.md"
+  ],
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch"
   },
-  "description": "Disfox is a framework that simplifies and organizes discord.js development. https://disfox.netlify.app",
+  "keywords": [
+    "discord",
+    "discord.js",
+    "discord bot",
+    "bot framework",
+    "slash commands",
+    "interaction handler",
+    "nodejs",
+    "typescript",
+    "framework",
+    "api",
+    "bot",
+    "disfox"
+  ],
   "author": "xFoxyyy0",
   "license": "MIT",
-  "devDependencies": {
-    "@types/node": "^25.6.0",
-    "typescript": "^5.9.3"
+  "homepage": "https://disfox.netlify.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DisfoxJS/Disfox"
   },
-  "dependencies": {
-    "discord.js": "^14.26.3"
+  "bugs": {
+    "url": "https://github.com/DisfoxJS/Disfox/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "discord.js": "^14"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^25.6.0",
+    "dotenv": "^17.4.2",
+    "eslint": "^10.3.0",
+    "globals": "^17.6.0",
+    "typescript": "^5.9.3"
   }
 }

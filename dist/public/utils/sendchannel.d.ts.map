@@ -1,0 +1,1 @@
+{"version":3,"file":"sendchannel.d.ts","sourceRoot":"","sources":["../../../src/public/utils/sendchannel.ts"],"names":[],"mappings":"AAAA,UAAU,UAAU;IAChB,OAAO,CAAC,EAAE,MAAM,CAAC;IACjB,UAAU,CAAC,EAAE,OAAO,CAAC;IACrB,MAAM,EAAE,GAAG,EAAE,CAAA;CAChB;AAED,wBAAsB,KAAK,CACvB,KAAK,EAAE,MAAM,EACb,SAAS,EAAE,MAAM,EACjB,OAAO,EAAE,UAAU,gBA0BtB"}

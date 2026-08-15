@@ -1,3 +1,6 @@
+/**
+ * @deprecated
+ */
 export declare class AppConfig {
     #private;
     constructor();

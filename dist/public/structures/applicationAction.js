@@ -10,9 +10,9 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
 var _ApplicationAction_client, _ApplicationAction_token;
-import { sendC } from "../core/utils/sendchannel.js";
-import { DisfoxError } from "../errors/_disfoxerror.js";
-import { DisfoxErrorCode } from "../errors/_disfox.errorCode.js";
+import { sendC } from "../../../new/public/core/utils/sendchannel.js";
+import { DisfoxError } from "../../../new/private/_disfoxerror.js";
+import { DisfoxErrorCode } from "../../../new/private/_disfox.errorCode.js";
 /**
  * Types for sending or replying messages
  */

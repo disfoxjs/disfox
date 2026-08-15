@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "target": "es2024",
+        "allowJs": true,
+        "checkJs": true,
+        "module": "esnext",
+        "strict": true
+    }
+}

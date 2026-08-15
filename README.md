@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="https://disfox.netlify.app">
-  <img src="https://raw.githubusercontent.com/DisfoxJS/Disfox-assets/main/dfx.npm.png" width="500" />
+  <a href="https://disfox.js.org">
+    <img src="https://disfox.js.org/img/dfx-outline.png" width="500" />
   </a>
 </p>
 
@@ -10,30 +10,28 @@
 
 <p align="center">
   <a href="https://discord.gg/UuZnAuhhP6">
-    <img src="https://img.shields.io/badge/Community-Discord?logo=discord&style=for-the-badge&labelColor=0D1117&color=5865F2">
+    <img src="https://img.shields.io/badge/Community-Discord?logo=discord&labelColor=0D1117&color=5865F2">
   </a>
+  <img src="https://img.shields.io/badge/Built%20with-Discord.js-00A8FF?labelColor=0D1117">
+  <img src="https://img.shields.io/npm/v/disfox?labelColor=0D1117&color=3B82F6">
 </p>
 
-**Disfox** is a **framework** that enhances and organizes **discord.js** development, making building Discord applications faster, cleaner, and more structured.
+---
 
-**Examples and documentation available in [Official Documentation Site](https://disfox.netlify.app)**  
+**Disfox** is a TypeScript-powered framework for **Discord.js**, designed to make application development faster, cleaner, and smarter.
 
+With built-in automation, integrated services, and a modern architecture, Disfox reduces repetitive work so you can focus on building great Discord applications.
+
+**Less boilerplate. More productivity. Unlimited possibilities.**
+
+[See BehaviorTables](https://disfox.js.org) · [See SlashService](https://disfox.js.org)
 
 ### Install
 
-`npm install disfox`
-`yarn add disfox`
-`pnpm add disfox`
+`npm install disfox`  
+`yarn add disfox`  
+`pnpm add disfox`  
 `bun add disfox`
-
-### Key Features
-
-- **Result Pattern** for consistent and predictable handling  
-- Centralized **Client** and **Application** management  
-- Simplified **path** and **directory** handling  
-- Simplified **file system** utilities  
-- Dedicated **Slash Command** service  
-- Scalable and flexible **configuration system**
 
 ## Compatibility
 
@@ -42,6 +40,19 @@ Disfox is currently **not compatible with CommonJS**.
 Only ES Modules (ESM) are supported.
 
 ### Example usage
+
+```js
+import { SlashOptions, SlashService, SlashTag } from "disfox";
+
+const command = new SlashService.Command("ping1")
+    .description("replies")
+//  .mark(SlashTag.AdminOnly) // Optional method to enable command tags, defining behavior within the Discord API.
+    .action(interaction => {
+        interaction.reply("Pong!");
+    });
+
+export default command;
+```
 
 ```js
 import { Client, GatewayIntentBits, ActivityType, Events } from "discord.js";
@@ -65,13 +76,10 @@ await app.actions.setPresence(
 );
 
 app.client.on(Events.ClientReady, async () => {
-  // convert Disfox model to Discord.js SlashCommand structure
-  const command = await SlashService.convertsFile("./commands/ping.js");
+  const command = await SlashService.extractFile("./commands/ping.js");
 
-  // deploy globally
   await app.slash.deployGlobal([command]);
 
-  // listen for interactions
   app.slash.listen({
     onError: {
       message: "Error occurred. Try again later.",
@@ -79,20 +87,14 @@ app.client.on(Events.ClientReady, async () => {
     }
   });
 });
-
 ```
 
-### Status
-The framework is still **under development**. All suggestions and ideas are very welcome.
+**Ready to build with Disfox? [Get Started →](https://disfox.js.org)**
 
-### Community Server
-Join our Discord for support, questions, and suggestions:  
-https://discord.gg/UuZnAuhhP6
+### Explore Disfox
 
-### Disfox
-
-- [Official Documentation Site](https://disfox.netlify.app)
+- [Official Documentation](https://disfox.js.org)
 - [NPM Package](https://www.npmjs.com/package/disfox)
-- [Github Repository](https://github.com/DisfoxJS/Disfox)
-- [Github Wiki](https://github.com/DisfoxJS/Disfox/wiki/What-is-Disfox%3F)
+- [GitHub Repository](https://github.com/DisfoxJS/Disfox)
+- [GitHub Wiki](https://github.com/DisfoxJS/Disfox/wiki/What-is-Disfox%3F)
 - [Discord Community Server](https://discord.gg/UuZnAuhhP6)

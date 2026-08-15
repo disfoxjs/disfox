@@ -10,7 +10,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
 var _ActionService_client, _ActionService_token;
-import { sendC } from "../core/utils/sendchannel.js";
+import { sendC } from "../../../new/public/core/utils/sendchannel.js";
 /**
  * Service for Discord client actions
  */

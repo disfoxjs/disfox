@@ -1,4 +1,3 @@
-'use strict';
 var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
     if (kind === "m") throw new TypeError("Private method is not writable");
     if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
@@ -10,11 +9,12 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var _Command_isDFXM, _Command_name, _Command_description, _Command_contexts, _Command_options, _Command_tags, _Command_execute;
-import { SlashOption } from "./slashServiceOption.js";
-import { SlashTag } from '../enums/slashTag.js';
-import { DisfoxErrorCode } from "../errors/_disfox.errorCode.js";
-import { DisfoxError } from "../errors/_disfoxerror.js";
+var _Command_isDFXM, _Command_name, _Command_description, _Command_contexts, _Command_options, _Command_tags, _Command_behaviorTable, _Command_execute;
+import { SlashOption } from "../../../new/public/structures/slashServiceOption.js";
+import { SlashTag } from '../../../new/public/types/slashTag.js';
+import { DisfoxErrorCode } from "../../../new/private/_disfox.errorCode.js";
+import { DisfoxError } from "../../../new/private/_disfoxerror.js";
+//import { DisfoxComponent } from "../core/modules/disfoxComponent.test.js";
 /**
  * Represents a Discord slash command definition, allowing for fluent configuration
  * of command metadata, options, execution logic, and internal tags.
@@ -31,22 +31,9 @@ export class Command {
         _Command_contexts.set(this, void 0);
         _Command_options.set(this, void 0);
         _Command_tags.set(this, void 0);
+        _Command_behaviorTable.set(this, void 0);
         _Command_execute.set(this, void 0);
-        /**
-         * Retrieves the internal configuration data of the command.
-         * @returns {Object} An object containing the command metadata, options, tags, and action callback.
-         */
-        this.cdata = () => {
-            return {
-                name: __classPrivateFieldGet(this, _Command_name, "f"),
-                description: __classPrivateFieldGet(this, _Command_description, "f"),
-                contexts: __classPrivateFieldGet(this, _Command_contexts, "f"),
-                options: __classPrivateFieldGet(this, _Command_options, "f"),
-                tags: __classPrivateFieldGet(this, _Command_tags, "f"),
-                action: __classPrivateFieldGet(this, _Command_execute, "f"),
-                isDFXM: __classPrivateFieldGet(this, _Command_isDFXM, "f")
-            };
-        };
+        //super();
         __classPrivateFieldSet(this, _Command_name, name, "f");
         __classPrivateFieldSet(this, _Command_description, null, "f");
         __classPrivateFieldSet(this, _Command_options, [], "f");
@@ -107,6 +94,27 @@ export class Command {
         __classPrivateFieldGet(this, _Command_tags, "f").push(tag);
         return this;
     }
+    dock(component) {
+        __classPrivateFieldSet(this, _Command_behaviorTable, component, "f");
+        return this;
+    }
+    /**
+     * Retrieves the internal configuration data of the command.
+     * @returns {Object} An object containing the command metadata, options, tags, and action callback.
+     */
+    get data() {
+        return {
+            name: __classPrivateFieldGet(this, _Command_name, "f"),
+            description: __classPrivateFieldGet(this, _Command_description, "f"),
+            contexts: __classPrivateFieldGet(this, _Command_contexts, "f"),
+            options: __classPrivateFieldGet(this, _Command_options, "f"),
+            tags: __classPrivateFieldGet(this, _Command_tags, "f"),
+            action: __classPrivateFieldGet(this, _Command_execute, "f"),
+            isDFXM: __classPrivateFieldGet(this, _Command_isDFXM, "f"),
+            behaviorTable: __classPrivateFieldGet(this, _Command_behaviorTable, "f")
+        };
+    }
+    ;
     /**
      * Sets the callback function to be executed when the command is invoked.
      * @param {(interaction: Interaction) => void} callback - The function to run upon execution.
@@ -116,5 +124,10 @@ export class Command {
         __classPrivateFieldSet(this, _Command_execute, callback, "f");
         return this;
     }
+    hasBehaviorT() {
+        if (!__classPrivateFieldGet(this, _Command_behaviorTable, "f"))
+            return false;
+        return true;
+    }
 }
-_Command_isDFXM = new WeakMap(), _Command_name = new WeakMap(), _Command_description = new WeakMap(), _Command_contexts = new WeakMap(), _Command_options = new WeakMap(), _Command_tags = new WeakMap(), _Command_execute = new WeakMap();
+_Command_isDFXM = new WeakMap(), _Command_name = new WeakMap(), _Command_description = new WeakMap(), _Command_contexts = new WeakMap(), _Command_options = new WeakMap(), _Command_tags = new WeakMap(), _Command_behaviorTable = new WeakMap(), _Command_execute = new WeakMap();

@@ -1,0 +1,3 @@
+class Visual {
+}
+export {};

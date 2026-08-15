@@ -1,4 +1,15 @@
 # Node.js
 node_modules/
+
+# Devlopment tests
+tests/
+test.js
+
+# Source code tests
+src/*.test.ts
+src/*.test.txt
+src/*.txt
+src/*.test
+
 .npmrc
-prototypes/
+.env

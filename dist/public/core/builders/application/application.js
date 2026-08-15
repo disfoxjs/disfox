@@ -10,9 +10,9 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
 var _Application_client, _Application_token;
-import { ActionService } from "./action.service.js";
-import { EventController } from "./events.controller.js";
-import { SlashController } from "./slash.controller.js";
+import { ActionService } from "../../../../../new/public/core/builders/application/action.service.js";
+import { EventController } from "../../../../../new/public/core/builders/application/events.controller.js";
+import { SlashController } from "../../../../../new/public/core/builders/application/slash.controller.js";
 export class Application {
     constructor(settings) {
         _Application_client.set(this, void 0);

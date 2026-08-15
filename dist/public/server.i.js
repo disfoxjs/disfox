@@ -1,1 +1,1 @@
-export { DfxServer } from './core/builders/dfxconnect.js';
+export { DfxServer } from '../../new/public/core/builders/dfxconnect.js';

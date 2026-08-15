@@ -9,15 +9,17 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var _ApplicationSlash_client, _ApplicationSlash_globalSlash, _ApplicationSlash_guildSlash;
-import { DisfoxErrorCode } from "../errors/_disfox.errorCode.js";
-import { DisfoxError } from "../errors/_disfoxerror.js";
-import { Response } from "../core/modules/response.js";
+var _ApplicationSlash_client, _ApplicationSlash_globalSlash, _ApplicationSlash_guildSlash, _ApplicationSlash_listener;
+import { DisfoxErrorCode } from "../../../new/private/_disfox.errorCode.js";
+import { DisfoxError } from "../../../new/private/_disfoxerror.js";
+import { Events } from "discord.js";
 export class ApplicationSlash {
     constructor(client) {
         _ApplicationSlash_client.set(this, void 0);
         _ApplicationSlash_globalSlash.set(this, new Map());
         _ApplicationSlash_guildSlash.set(this, new Map());
+        _ApplicationSlash_listener.set(this, null);
+        this.listening = false;
         __classPrivateFieldSet(this, _ApplicationSlash_client, client, "f");
     }
     /**
@@ -26,7 +28,6 @@ export class ApplicationSlash {
      * @param commands List of slash command objects.
      */
     async deployGlobal(commands) {
-        console.log("RECEIVED: ", commands);
         if (__classPrivateFieldGet(this, _ApplicationSlash_client, "f") == null) {
             throw new DisfoxError({
                 "code": DisfoxErrorCode.UNKNOWN,
@@ -66,54 +67,33 @@ export class ApplicationSlash {
         }
     }
     /**
-     * @deprecated Will be removed in v0.0.5.
-     * Use {@link listen} instead.
-     */
-    async listenCommands(commands, onErrorMessage = "An error occurred while executing this command. Please try again later.") {
-        console.warn("The `.extractSlashCommands()` method was deprecated in Disfox v0.0.5.\nUse `SlashService.extractFile()` or `SlashService.extractDir()`.");
-        const res = new Response({ commands, onErrorMessage });
-        __classPrivateFieldGet(this, _ApplicationSlash_client, "f").on("interactionCreate", async (interaction) => {
-            if (!interaction.isChatInputCommand())
-                return;
-            const cmd = commands.find(c => c.data.name === interaction.commandName);
-            if (!cmd)
-                return;
-            try {
-                await cmd.execute(interaction);
-                return interaction;
-            }
-            catch (err) {
-                await interaction.reply(onErrorMessage);
-                console.error(res.error({
-                    message: "Failed to execute Slash Command.",
-                    code: "sl_exe_err",
-                    content: err
-                }).result);
-            }
-        });
-    }
-    /**
      * Listen for slash command executions.
      *
      * @param data Listener configuration options.
-     * @param callback Optional callback executed after a command runs successfully.
+     * @param listener Optional listener executed after a command runs successfully.
      */
-    async listen(data = {}, callback) {
+    async listen(data = {}, listener) {
         const all = [
             ...__classPrivateFieldGet(this, _ApplicationSlash_globalSlash, "f").values(),
             ...__classPrivateFieldGet(this, _ApplicationSlash_guildSlash, "f").values()
         ];
-        __classPrivateFieldGet(this, _ApplicationSlash_client, "f").on("interactionCreate", async (interaction) => {
+        __classPrivateFieldSet(this, _ApplicationSlash_listener, async (interaction) => {
             if (!interaction.isChatInputCommand())
                 return;
             const cmd = all.find(c => c.data.name === interaction.commandName);
             if (!cmd)
                 return;
             try {
+                const behaviorTable = cmd.data.disfoxData?.behaviorTable ?? null;
+                if (behaviorTable) {
+                    const task = await behaviorTable.attachment.execute({ cmd: cmd, interaction: interaction });
+                    if (!task.continue)
+                        return;
+                }
                 await cmd.execute(interaction);
-                if (callback) {
+                if (listener) {
                     try {
-                        await callback(interaction);
+                        await listener(interaction);
                     }
                     catch (err) {
                         throw new DisfoxError({
@@ -146,7 +126,18 @@ export class ApplicationSlash {
                     }
                 });
             }
-        });
+        }, "f");
+        __classPrivateFieldGet(this, _ApplicationSlash_client, "f").on(Events.InteractionCreate, __classPrivateFieldGet(this, _ApplicationSlash_listener, "f"));
+    }
+    /**
+    * close the listener for slash command executions.
+    */
+    close() {
+        if (!__classPrivateFieldGet(this, _ApplicationSlash_listener, "f"))
+            return;
+        __classPrivateFieldGet(this, _ApplicationSlash_client, "f").off(Events.InteractionCreate, __classPrivateFieldGet(this, _ApplicationSlash_listener, "f"));
+        __classPrivateFieldSet(this, _ApplicationSlash_listener, null, "f");
+        this.listening = false;
     }
 }
-_ApplicationSlash_client = new WeakMap(), _ApplicationSlash_globalSlash = new WeakMap(), _ApplicationSlash_guildSlash = new WeakMap();
+_ApplicationSlash_client = new WeakMap(), _ApplicationSlash_globalSlash = new WeakMap(), _ApplicationSlash_guildSlash = new WeakMap(), _ApplicationSlash_listener = new WeakMap();

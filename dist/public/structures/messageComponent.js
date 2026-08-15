@@ -11,8 +11,8 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
 };
 var _Message_embeds, _Message_content, _Message_components, _Message_flags;
 import { Embed } from "discord.js";
-import { DisfoxErrorCode } from "../errors//_disfox.errorCode.js";
-import { DisfoxError } from "../errors/_disfoxerror.js";
+import { DisfoxErrorCode } from "../../../new/public/errors/_disfox.errorCode.js";
+import { DisfoxError } from "../../../new/public/errors/_disfoxerror.js";
 export class Message {
     constructor() {
         _Message_embeds.set(this, void 0);

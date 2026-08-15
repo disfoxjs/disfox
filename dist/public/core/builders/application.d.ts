@@ -1,4 +1,4 @@
-import { ApplicationAction } from "../../structures/applicationAction.js";
+import { ApplicationAction } from "../../structs/applicationAction.js";
 import { EventController } from "../../structures/events.controller.js";
 import { SlashController } from "../../structures/slash.controller.js";
 import { Client } from "discord.js";

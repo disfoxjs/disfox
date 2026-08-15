@@ -1,6 +1,6 @@
 import { Interaction, InteractionContextType } from "discord.js";
 import { SlashInput } from "./slashinput.js";
-import { SlashTag } from '../../../enums/slashTag.js';
+import { SlashTag } from '../../../types/slashTag.js';
 export declare class Command {
     #private;
     constructor(name: string);

@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
-    "target": "ES2020",               
+    "target": "ES2020",
     "module": "Node16",
     "moduleResolution": "Node16",
+
     "rootDir": "src",
     "outDir": "dist",
 
@@ -12,9 +13,34 @@
     "emitDeclarationOnly": false,
     "strict": true,
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true, 
-    "skipLibCheck": true                    
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
   },
-  "include": ["src/**/*"],  
-  "exclude": ["node_modules", "dist", "assets"]
+  "include": [
+    "src/**/*",
+    "src/private/_disfox.errorCode.ts",
+    "src/private/_disfoxerror.ts",
+    "src/public/types/slashTag.ts",
+    "src/public/types/behaviorFields.ts",
+    "src/public/types/disfoxCommand.ts",
+    "src/public/types/responseTypes.ts",
+    "src/public/types/slashTypes.ts",
+    "src/public/modules/behaviorTable.service.ts",
+    "src/public/modules/event.service.ts",
+    "src/public/modules/slash.service.ts",
+    "src/public/structs/applicationAction.ts",
+    "src/public/structs/applicationEvents.ts",
+    "src/public/structs/applicationSlash.ts",
+    "src/public/structs/slashOptions.ts",
+    "src/public/structs/slashServiceCommand.ts",
+    "src/public/structs/slashServiceOption.ts",
+    "src/public/modules/filemanage.ts",
+    "src/public/modules/pathmanage.ts",
+    "src/index.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "assets"
+  ]
 }

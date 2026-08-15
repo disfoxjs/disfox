@@ -1,4 +1,4 @@
-import { ErrorContentType } from "../../types/response.types.js";
+import { ErrorContentType } from "../../types/responseTypes.js";
 declare class Response {
     #private;
     constructor(source?: any);

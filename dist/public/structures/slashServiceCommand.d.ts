@@ -1,6 +1,7 @@
-import { ChatInputCommandInteraction, Interaction, InteractionContextType } from "discord.js";
+import { ChatInputCommandInteraction, CommandInteraction, InteractionContextType } from "discord.js";
 import { SlashOption } from "./slashServiceOption.js";
-import { SlashTag } from '../enums/slashTag.js';
+import { SlashTag } from '../types/slashTag.js';
+import { BehaviorTable } from "../core/modules/behaviorTable.js";
 /**
  * Represents a Discord slash command definition, allowing for fluent configuration
  * of command metadata, options, execution logic, and internal tags.
@@ -32,11 +33,12 @@ export declare class Command {
      * @returns {this} The current Command instance for chaining.
      */
     mark(tag: SlashTag): this;
+    dock(component: BehaviorTable): this;
     /**
      * Retrieves the internal configuration data of the command.
      * @returns {Object} An object containing the command metadata, options, tags, and action callback.
      */
-    cdata: () => {
+    get data(): {
         name: string;
         description: string | null;
         contexts: InteractionContextType[];
@@ -44,12 +46,14 @@ export declare class Command {
         tags: SlashTag[];
         action: (interaction: ChatInputCommandInteraction) => void;
         isDFXM: boolean;
+        behaviorTable: BehaviorTable | undefined;
     };
     /**
      * Sets the callback function to be executed when the command is invoked.
      * @param {(interaction: Interaction) => void} callback - The function to run upon execution.
      * @returns {this} The current Command instance for chaining.
      */
-    action(callback: (interaction: Interaction) => void): this;
+    action(callback: (interaction: CommandInteraction) => void): this;
+    hasBehaviorT(): boolean;
 }
 //# sourceMappingURL=slashServiceCommand.d.ts.map

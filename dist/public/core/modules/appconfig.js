@@ -10,6 +10,9 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
 var _AppConfig_configs;
+/**
+ * @deprecated
+ */
 export class AppConfig {
     constructor() {
         _AppConfig_configs.set(this, void 0);

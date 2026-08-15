@@ -10,7 +10,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
 var _ActionService_client, _ActionService_token;
-import { sendC } from "../../utils/sendchannel.js";
+import { sendC } from "../../../../../new/public/core/utils/sendchannel.js";
 export class ActionService {
     constructor(client, token) {
         _ActionService_client.set(this, void 0);

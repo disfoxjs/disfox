@@ -1,6 +1,14 @@
-import { Command } from "../../structures/slashServiceCommand.js";
-import { SlashOption } from "../../structures/slashServiceOption.js";
-import { SlashCommand } from "../../types/slash.types.js";
+import { Command } from "../../../dist/public/structures/slashServiceCommand.js";
+import { SlashOption } from "../../../dist/public/structures/slashServiceOption.js";
+import { SlashCommand } from "../types/slashTypes.js";
+interface extractionOptions {
+    autoConverts?: boolean;
+    ignoreInvalidStructures?: boolean;
+}
+interface extractionValidates {
+    valid: SlashCommand[];
+    invalid: any[];
+}
 export declare class SlashService {
     static Option: typeof SlashOption;
     static Command: typeof Command;
@@ -19,22 +27,10 @@ export declare class SlashService {
         valid: SlashCommand[];
         invalid: any[];
     }>;
-    /**
-     * Extracts slash commands from a directory and validates their structure.
-     *
-     * Each `.js` file inside the provided directory is dynamically imported.
-     * A command is considered valid only if it exports both `data` and `execute`.
-     *
-     * The result separates valid and invalid command modules.
-     *
-     * @param {string} dir - Absolute or relative path to the directory containing command files.
-     * @returns {Promise<{ valid: SlashCommand[], invalid: any[] }>}
-     * An object containing arrays of valid and invalid commands.
-     */
-    static extractDir(dir: string): Promise<{
-        valid: SlashCommand[];
-        invalid: any[];
-    }>;
+    static extractDir(dir: string, options: extractionOptions & {
+        ignoreInvalidStructures: true;
+    }): Promise<SlashCommand[]>;
+    static extractDir(dir: string, options?: extractionOptions): Promise<extractionValidates>;
     /**
      * Extracts a slash command from a single file and validates its structure.
      * both `data` and `execute`.
@@ -46,4 +42,5 @@ export declare class SlashService {
      */
     static extractFile(filePath: string): Promise<SlashCommand[]>;
 }
+export {};
 //# sourceMappingURL=slash.service.d.ts.map

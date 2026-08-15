@@ -1,10 +1,10 @@
 import fs from "fs";
 import path from "path";
-import { Command } from "../../structures/slashServiceCommand.js";
-import { SlashOption } from "../../structures/slashServiceOption.js";
-import { DisfoxError } from "../../errors/_disfoxerror.js";
-import { DisfoxErrorCode } from "../../errors/_disfox.errorCode.js";
-import { dfx2djsC } from "../../../internal/utils/_dfx2djs.mjs";
+import { Command } from "../../../../new/public/structures/slashServiceCommand.js";
+import { SlashOption } from "../../../../new/public/structures/slashServiceOption.js";
+import { DisfoxError } from "../../../../new/private/_disfoxerror.js";
+import { DisfoxErrorCode } from "../../../../new/private/_disfox.errorCode.js";
+import { Adapters } from "../../../../new/adapters/Adapters.js";
 export class SlashService {
     /**
      * Extracts slash commands from a directory and validates their structure.
@@ -44,21 +44,21 @@ export class SlashService {
      *
      * The result separates valid and invalid command modules.
      *
-     * @param {string} dir - Absolute or relative path to the directory containing command files.
-     * @returns {Promise<{ valid: SlashCommand[], invalid: any[] }>}
+     *
      * An object containing arrays of valid and invalid commands.
      */
-    static async extractDir(dir) {
+    static async extractDir(dir, options) {
         const cmdsPath = path.resolve(dir);
-        const files = fs.readdirSync(cmdsPath).filter(f => f.endsWith(".js"));
+        const files = fs.readdirSync(cmdsPath);
         const valid = [];
         const invalid = [];
         for (const file of files) {
             const filePath = path.join(cmdsPath, file);
             const imported = await import(`file://${filePath.replace(/\\/g, "/")}`);
             let COMMAND = imported.default ?? imported;
-            if (COMMAND.cdata?.().isDFXM)
-                COMMAND = dfx2djsC(COMMAND);
+            if (COMMAND.data?.isDFXM)
+                if (options?.autoConverts || options == undefined)
+                    COMMAND = Adapters.slashModel(COMMAND);
             if ("data" in COMMAND && "execute" in COMMAND) {
                 valid.push(COMMAND);
             }
@@ -66,6 +66,8 @@ export class SlashService {
                 invalid.push(COMMAND);
             }
         }
+        if (options?.ignoreInvalidStructures)
+            return valid;
         return { valid, invalid };
     }
     /**
@@ -89,7 +91,7 @@ export class SlashService {
         const imported = await import(`file://${resolved.replace(/\\/g, "/")}`);
         let COMMAND = imported.default ?? imported;
         if (COMMAND.cdata?.().isDFXM)
-            COMMAND = dfx2djsC(COMMAND);
+            COMMAND = Adapters.slashModel(COMMAND);
         return [COMMAND];
     }
 }

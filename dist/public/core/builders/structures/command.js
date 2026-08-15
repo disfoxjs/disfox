@@ -11,10 +11,10 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
 var _Command_name, _Command_description, _Command_contexts, _Command_options, _Command_tags, _Command_execute;
-import { SlashInput } from "./slashinput.js";
-import { DisfoxError } from "../../../../internal/errors/_disfoxerror.js";
-import { DisfoxErrorCode } from "../../../../internal/errors/_disfox.errorCode.js";
-import { SlashTag } from '../../../enums/slashTag.js';
+import { SlashInput } from "../../../../../new/public/core/builders/structures/slashinput.js";
+import { DisfoxError } from "../../../../../new/internal/errors/_disfoxerror.js";
+import { DisfoxErrorCode } from "../../../../../new/internal/errors/_disfox.errorCode.js";
+import { SlashTag } from '../../../../../new/public/types/slashTag.js';
 export class Command {
     constructor(name) {
         _Command_name.set(this, void 0);
