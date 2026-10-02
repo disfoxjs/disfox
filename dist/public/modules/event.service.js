@@ -4,7 +4,7 @@ export class EventService {
     /**
      * Extracts all event modules from a directory.
      *
-     * This method reads all `.js` files in the given directory, imports them dynamically,
+     * This method reads all files in the given directory, imports them dynamically,
      * and separates them into valid and invalid events. A valid event is an object
      * containing both `data` and `execute` properties.
      *
@@ -20,7 +20,7 @@ export class EventService {
             const filePath = path.join(eventsPath, file);
             const imported = await import(`file://${filePath.replace(/\\/g, "/")}`);
             const event = imported.default ?? imported;
-            if (("data" in event || "name" in event) && "execute" in event) {
+            if ("name" in event && "execute" in event) {
                 valid.push(event);
             }
             else {
@@ -32,11 +32,11 @@ export class EventService {
     /**
      * Extracts a single event module from a file.
      *
-     * This method imports a `.js` file dynamically and checks if it contains
+     * This method imports a file dynamically and checks if it contains
      * both `data` and `execute` properties. Throws an error if the file extension
      * is unsupported.
      *
-     * @param {string} filePath - The path to the `.js` event file.
+     * @param {string} filePath - The path to the event file.
      * @returns {Promise<{ valid: EventType[], invalid: any[] }>} An object containing the valid event or invalid module.
      * @throws {DisfoxError} If the file extension is not `.js`.
      */
@@ -46,7 +46,7 @@ export class EventService {
         const resolved = path.resolve(filePath);
         const imported = (await import(`file://${resolved.replace(/\\/g, "/")}`));
         const event = imported.default ?? imported;
-        if (("data" in event || "name" in event) && "execute" in event) {
+        if ("name" in event && "execute" in event) {
             valid.push(event);
         }
         else {

@@ -1,5 +1,5 @@
 
-import { ErrorContentType, ResponseType } from "../types/responseTypes.js";
+import { ErrorContentType } from "../types/responseTypes.js";
 
 /**
  * @deprecated Response is deprecated and is no longer supported.

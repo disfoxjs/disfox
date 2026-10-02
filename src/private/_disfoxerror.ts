@@ -6,10 +6,11 @@ interface DisfoxErrorSource {
 }
 
 interface DisfoxErrorType {
-    code: DisfoxErrorCode
-    source?: DisfoxErrorSource
-    message: string
-    details?: any
+    code: DisfoxErrorCode;
+    source?: DisfoxErrorSource;
+    message: string;
+    sourceError?: typeof Error | string | any;
+    details?: any;
 }
 
 export class DisfoxError extends Error {

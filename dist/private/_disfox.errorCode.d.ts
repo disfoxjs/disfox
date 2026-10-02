@@ -8,6 +8,10 @@ export declare enum DisfoxErrorCode {
     INVALID_FORM_BODY = "invalid_form_body",
     INVALID_TYPE = "invalid_type",
     SLASH_EXECUTE = "slash_execute",
-    DUPLICATE_TAG = "duplicate_tag"
+    DUPLICATE_TAG = "duplicate_tag",
+    UNDEFINED_TOKEN = "undefined_token",
+    UNDEFINED_CLIENT = "undefined_client",
+    APPLICATION_NOT_READY = "application_not_ready",
+    ALREADY_CONNECTED = "already_connected"
 }
 //# sourceMappingURL=_disfox.errorCode.d.ts.map

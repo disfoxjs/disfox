@@ -30,6 +30,12 @@ export declare class SlashOption {
      */
     description(description: string): this;
     /**
+     * Sets the available choices for this option.
+     * @param {Record<any, any>} c - A record containing the choice names and their corresponding values.
+     * @returns {this} The current instance for method chaining.
+     */
+    choices(c: Record<any, any>): this;
+    /**
      * Defines whether this option is mandatory for the user to provide.
      * @param {boolean} isRequired - True if mandatory, false otherwise.
      * @returns {this} The current SlashOption instance for chaining.
@@ -70,6 +76,7 @@ export declare class SlashOption {
         description: string | null;
         required: boolean;
         settings: SlashInputSettings | Record<string, any>;
+        choices: Record<any, any>;
     };
     get isRequired(): boolean;
 }

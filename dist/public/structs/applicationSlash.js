@@ -1,26 +1,14 @@
-var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
-    if (kind === "m") throw new TypeError("Private method is not writable");
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
-    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
-};
-var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, state, kind, f) {
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
-    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
-};
-var _ApplicationSlash_client, _ApplicationSlash_globalSlash, _ApplicationSlash_guildSlash, _ApplicationSlash_listener;
 import { DisfoxErrorCode } from "../../private/_disfox.errorCode.js";
 import { DisfoxError } from "../../private/_disfoxerror.js";
 import { Events } from "discord.js";
 export class ApplicationSlash {
+    #client;
+    #globalSlash = new Map();
+    #guildSlash = new Map();
+    #listener = null;
+    listening = false;
     constructor(client) {
-        _ApplicationSlash_client.set(this, void 0);
-        _ApplicationSlash_globalSlash.set(this, new Map());
-        _ApplicationSlash_guildSlash.set(this, new Map());
-        _ApplicationSlash_listener.set(this, null);
-        this.listening = false;
-        __classPrivateFieldSet(this, _ApplicationSlash_client, client, "f");
+        this.#client = client;
     }
     /**
      * Deploy slash commands globally.
@@ -28,7 +16,7 @@ export class ApplicationSlash {
      * @param commands List of slash command objects.
      */
     async deployGlobal(commands) {
-        if (__classPrivateFieldGet(this, _ApplicationSlash_client, "f") == null) {
+        if (this.#client == null) {
             throw new DisfoxError({
                 "code": DisfoxErrorCode.UNKNOWN,
                 "message": "Client probably is null",
@@ -37,7 +25,7 @@ export class ApplicationSlash {
                 }
             });
         }
-        if (__classPrivateFieldGet(this, _ApplicationSlash_client, "f").application == null) {
+        if (this.#client.application == null) {
             throw new DisfoxError({
                 "code": DisfoxErrorCode.UNKNOWN,
                 "message": "Client application is not available.",
@@ -47,9 +35,9 @@ export class ApplicationSlash {
             });
         }
         for (const command of commands) {
-            __classPrivateFieldGet(this, _ApplicationSlash_globalSlash, "f").set(command.data.name, command);
+            this.#globalSlash.set(command.data.name, command);
         }
-        await __classPrivateFieldGet(this, _ApplicationSlash_client, "f").application.commands.set([...__classPrivateFieldGet(this, _ApplicationSlash_globalSlash, "f").values()].map(command => command.data.toJSON()));
+        await this.#client.application.commands.set([...this.#globalSlash.values()].map(command => command.data.toJSON()));
     }
     /**
      * Deploy slash commands to specific guilds.
@@ -59,7 +47,7 @@ export class ApplicationSlash {
      */
     async deployGuilds(commands, guilds) {
         for (const guildId of guilds) {
-            const guild = __classPrivateFieldGet(this, _ApplicationSlash_client, "f").guilds.cache.get(String(guildId));
+            const guild = this.#client.guilds.cache.get(String(guildId));
             if (!guild) {
                 throw new DisfoxError({
                     "code": DisfoxErrorCode.GUILD_NOT_FOUND,
@@ -70,7 +58,7 @@ export class ApplicationSlash {
                 });
             }
             for (const command of commands) {
-                __classPrivateFieldGet(this, _ApplicationSlash_guildSlash, "f").set(command.data.name, command);
+                this.#guildSlash.set(command.data.name, command);
             }
             await guild.commands.set(commands.map(c => c.data.toJSON()));
         }
@@ -91,11 +79,11 @@ export class ApplicationSlash {
                 }
             });
         }
-        __classPrivateFieldSet(this, _ApplicationSlash_listener, async (interaction) => {
+        this.#listener = async (interaction) => {
             if (!interaction.isChatInputCommand())
                 return;
-            const cmd = __classPrivateFieldGet(this, _ApplicationSlash_globalSlash, "f").get(interaction.commandName) ??
-                __classPrivateFieldGet(this, _ApplicationSlash_guildSlash, "f").get(interaction.commandName);
+            const cmd = this.#globalSlash.get(interaction.commandName) ??
+                this.#guildSlash.get(interaction.commandName);
             if (!cmd)
                 return;
             try {
@@ -149,19 +137,18 @@ export class ApplicationSlash {
                     }
                 }));
             }
-        }, "f");
-        __classPrivateFieldGet(this, _ApplicationSlash_client, "f").on(Events.InteractionCreate, __classPrivateFieldGet(this, _ApplicationSlash_listener, "f"));
+        };
+        this.#client.on(Events.InteractionCreate, this.#listener);
         this.listening = true;
     }
     /**
     * close the listener for slash command executions.
     */
     close() {
-        if (!__classPrivateFieldGet(this, _ApplicationSlash_listener, "f"))
+        if (!this.#listener)
             return;
-        __classPrivateFieldGet(this, _ApplicationSlash_client, "f").off(Events.InteractionCreate, __classPrivateFieldGet(this, _ApplicationSlash_listener, "f"));
-        __classPrivateFieldSet(this, _ApplicationSlash_listener, null, "f");
+        this.#client.off(Events.InteractionCreate, this.#listener);
+        this.#listener = null;
         this.listening = false;
     }
 }
-_ApplicationSlash_client = new WeakMap(), _ApplicationSlash_globalSlash = new WeakMap(), _ApplicationSlash_guildSlash = new WeakMap(), _ApplicationSlash_listener = new WeakMap();

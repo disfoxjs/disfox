@@ -1,37 +1,27 @@
-var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
-    if (kind === "m") throw new TypeError("Private method is not writable");
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
-    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
-};
-var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, state, kind, f) {
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
-    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
-};
-var _SlashOption_name, _SlashOption_description, _SlashOption__type, _SlashOption_required, _SlashOption_settings;
 /**
  * Represents an input option for a Discord slash command.
  * Allows for fluent configuration of input types, descriptions, requirements,
  * and specific numerical constraints.
  */
 export class SlashOption {
+    #name;
+    #description;
+    #_type;
+    #required;
+    #settings;
+    #_choices;
     /**
      * Creates an instance of a SlashOption.
      * @param {string} name - The internal name of the option.
      */
     constructor(name) {
-        _SlashOption_name.set(this, void 0);
-        _SlashOption_description.set(this, void 0);
-        _SlashOption__type.set(this, void 0);
-        _SlashOption_required.set(this, void 0);
-        _SlashOption_settings.set(this, void 0);
-        __classPrivateFieldSet(this, _SlashOption_name, name, "f");
-        __classPrivateFieldSet(this, _SlashOption__type, null, "f");
-        __classPrivateFieldSet(this, _SlashOption_description, null, "f");
-        __classPrivateFieldSet(this, _SlashOption_required, false, "f");
-        __classPrivateFieldSet(this, _SlashOption_settings, {}, "f");
-        __classPrivateFieldGet(this, _SlashOption_settings, "f").channelT = [];
+        this.#name = name;
+        this.#_type = null;
+        this.#description = null;
+        this.#required = false;
+        this.#settings = {};
+        this.#settings.channelT = [];
+        this.#_choices = {};
     }
     /**
      * Sets the data type of the option.
@@ -39,7 +29,7 @@ export class SlashOption {
      * @returns {this} The current SlashOption instance for chaining.
      */
     type(type) {
-        __classPrivateFieldSet(this, _SlashOption__type, type, "f");
+        this.#_type = type;
         return this;
     }
     /**
@@ -48,7 +38,16 @@ export class SlashOption {
      * @returns {this} The current SlashOption instance for chaining.
      */
     description(description) {
-        __classPrivateFieldSet(this, _SlashOption_description, description, "f");
+        this.#description = description;
+        return this;
+    }
+    /**
+     * Sets the available choices for this option.
+     * @param {Record<any, any>} c - A record containing the choice names and their corresponding values.
+     * @returns {this} The current instance for method chaining.
+     */
+    choices(c) {
+        this.#_choices = c;
         return this;
     }
     /**
@@ -57,7 +56,7 @@ export class SlashOption {
      * @returns {this} The current SlashOption instance for chaining.
      */
     required(isRequired) {
-        __classPrivateFieldSet(this, _SlashOption_required, isRequired, "f");
+        this.#required = isRequired;
         return this;
     }
     /**
@@ -66,7 +65,7 @@ export class SlashOption {
      * @returns {this} The current SlashOption instance for chaining.
      */
     maxNumber(number) {
-        __classPrivateFieldGet(this, _SlashOption_settings, "f").maxNumber = number;
+        this.#settings.maxNumber = number;
         return this;
     }
     /**
@@ -75,7 +74,7 @@ export class SlashOption {
      * @returns {this} The current SlashOption instance for chaining.
      */
     minNumber(number) {
-        __classPrivateFieldGet(this, _SlashOption_settings, "f").minNumber = number;
+        this.#settings.minNumber = number;
         return this;
     }
     /**
@@ -92,7 +91,7 @@ export class SlashOption {
      */
     channelTypes(...t) {
         for (const types of t)
-            __classPrivateFieldGet(this, _SlashOption_settings, "f").channelT.push(types);
+            this.#settings.channelT.push(types);
     }
     /**
      * Retrieves the internal configuration object for this option.
@@ -100,15 +99,15 @@ export class SlashOption {
      */
     get data() {
         return {
-            name: __classPrivateFieldGet(this, _SlashOption_name, "f"),
-            type: __classPrivateFieldGet(this, _SlashOption__type, "f"),
-            description: __classPrivateFieldGet(this, _SlashOption_description, "f"),
-            required: __classPrivateFieldGet(this, _SlashOption_required, "f"),
-            settings: __classPrivateFieldGet(this, _SlashOption_settings, "f")
+            name: this.#name,
+            type: this.#_type,
+            description: this.#description,
+            required: this.#required,
+            settings: this.#settings,
+            choices: this.#_choices
         };
     }
     get isRequired() {
-        return __classPrivateFieldGet(this, _SlashOption_required, "f");
+        return this.#required;
     }
 }
-_SlashOption_name = new WeakMap(), _SlashOption_description = new WeakMap(), _SlashOption__type = new WeakMap(), _SlashOption_required = new WeakMap(), _SlashOption_settings = new WeakMap();

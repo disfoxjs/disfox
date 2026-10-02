@@ -4,6 +4,8 @@ import { Command } from "../structs/slashServiceCommand.js";
 import { SlashOption } from "../structs/slashServiceOption.js";
 import { Adapters } from "../../adapters/adapters.js";
 export class SlashService {
+    static Option = SlashOption;
+    static Command = Command;
     /**
      * Extracts slash commands from a directory and validates their structure.
      * A command is considered valid only if it exports both `data` and `execute`.
@@ -86,5 +88,3 @@ export class SlashService {
         return [COMMAND];
     }
 }
-SlashService.Option = SlashOption;
-SlashService.Command = Command;

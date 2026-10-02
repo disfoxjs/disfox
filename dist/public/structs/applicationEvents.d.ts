@@ -1,7 +1,6 @@
 import { Client, ClientEvents } from "discord.js";
-interface EventType {
-    data?: keyof ClientEvents;
-    name?: keyof ClientEvents;
+export interface EventType {
+    name: keyof ClientEvents;
     execute: (...args: any[]) => void;
 }
 export declare class ApplicationEvents {
@@ -18,5 +17,4 @@ export declare class ApplicationEvents {
          */
     listenEvents(events: EventType[]): Promise<void>;
 }
-export {};
 //# sourceMappingURL=applicationEvents.d.ts.map

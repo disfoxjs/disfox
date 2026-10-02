@@ -1,26 +1,18 @@
-import { ActivityType, Client, InteractionReplyOptions, PresenceStatusData, PresenceUpdateStatus, Status } from "discord.js";
+import { ActivityType, Client, InteractionReplyOptions, PresenceStatusData } from "discord.js";
 import { sendC } from "../utils/sendchannel.js";
 import { DisfoxError } from "../../private/_disfoxerror.js";
 import { DisfoxErrorCode } from "../../private/_disfox.errorCode.js";
 
 type AvatarInput = string | Buffer | ArrayBuffer | null;
-/**
- * Types for sending or replying messages
- */
-
 
 /**
  * Service for Discord client actions
  */
 export class ApplicationAction {
-    /** Discord client instance */
     #client: Client;
-
-    /** Bot token */
     #token: string;
 
     /**
-     * Creates an instance of ActionService
      * @param client - The Discord client
      * @param token - Bot token
      */

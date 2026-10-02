@@ -5,8 +5,9 @@ export var BehaviorContext;
     BehaviorContext[BehaviorContext["Message"] = 2] = "Message";
 })(BehaviorContext || (BehaviorContext = {}));
 export class BehaviorTable {
+    config;
+    attachment = BehaviorAttachment;
     constructor(config) {
-        this.attachment = BehaviorAttachment;
         this.config = config;
     }
     static getTable(instance) {

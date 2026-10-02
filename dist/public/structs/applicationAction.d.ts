@@ -1,15 +1,11 @@
 import { ActivityType, Client, InteractionReplyOptions, PresenceStatusData } from "discord.js";
 type AvatarInput = string | Buffer | ArrayBuffer | null;
 /**
- * Types for sending or replying messages
- */
-/**
  * Service for Discord client actions
  */
 export declare class ApplicationAction {
     #private;
     /**
-     * Creates an instance of ActionService
      * @param client - The Discord client
      * @param token - Bot token
      */

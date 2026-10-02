@@ -62,10 +62,7 @@ const client = new Client({
   intents: [GatewayIntentBits.MessageContent]
 });
 
-const app = new Application({
-  token: process.env.TOKEN,
-  client: client
-});
+const app = new Application("YOUR_TOKEN_HERE"); // or new Application({ token: "YOUR_TOKEN_HERE", intents: [ GatewayIntentBits.GuildMessage ]}).
 
 await app.connect();
 

@@ -1,5 +1,190 @@
 # Changelog
 
+## [0.1.5] - 2026-10-02
+
+### Fixed
+
+- Fixed the typing of `Application.events.listenEvents(events.valid)`.
+
+- Errors thrown by `Application.connect()` now use `DisfoxError` instead of the native `Error`.
+
+- Removed unnecessary imports.
+
+- Return type of `SlashService.Option.channelTypes` fixed to `this`.
+
+### Improved
+
+- Updated the TypeScript build configuration to target `ES2022` and use Node.js-compatible module resolution, improving compatibility with the minimum supported runtime: **Node.js 20+**.
+
+- Added and reorganized internal error codes:
+  - `UNDEFINED_TOKEN`
+  - `UNDEFINED_CLIENT`
+  - `APPLICATION_NOT_READY`
+  - `ALREADY_CONNECTED`
+
+- The following getters no longer throw errors when the `Client` or `ClientUser` is unavailable:
+  - `Application.client`
+  - `Application.user`
+
+### Updated
+
+- Support for the `event.data` property in event definitions has been removed.
+
+The following format is **no longer supported**:
+
+```js
+export default {
+    data: Events.MessageCreate,
+
+    async execute(message) {
+        if (!message.content.startsWith("!mean")) return;
+
+        await message.reply({
+            content: `**@${message.author.displayName}**\n${message.content}.`
+        });
+    }
+}
+```
+
+Events must now use `name`:
+
+```ts
+export default {
+    name: Events.MessageCreate
+}
+```
+
+> **Attention:** this change requires existing events to be updated to the new API.
+
+---
+
+- `Application` instantiation has been simplified.
+
+Creating an `Application` now requires significantly less configuration. You are no longer required to manually create a `Client` using `discord.js`, nor provide a complete configuration object.
+
+There are now four main ways to create an application:
+
+#### Using an existing `Client`
+
+```js
+import { Client, GatewayIntentBits } from "discord.js";
+import { Application } from "disfox";
+
+const client = new Client({
+    intents: [GatewayIntentBits.MessageContent]
+});
+
+const app = new Application({
+    token: process.env.TOKEN,
+    client
+});
+```
+
+#### Letting Disfox create the `Client`
+
+```js
+import { GatewayIntentBits } from "discord.js";
+import { Application } from "disfox";
+
+const app = new Application({
+    token: process.env.TOKEN,
+    intents: [
+        GatewayIntentBits.MessageContent
+    ]
+});
+```
+
+> In this case, Disfox automatically creates the `Client` instance.
+
+#### Using the default Disfox intents
+
+```js
+import { Application } from "disfox";
+
+const app = new Application({
+    token: process.env.TOKEN
+});
+```
+
+> When no intents are provided, Disfox automatically configures its recommended default intents.
+
+#### Simplified instantiation
+
+```js
+import { Application } from "disfox";
+
+const app = new Application(process.env.TOKEN);
+```
+
+> Intents automatically configured by Disfox can later be modified using the new `Application` intent management methods.
+
+- **All examples available in:**
+https://disfox.js.org/docs/disfox/0.1.5/en/Get-Started/Creating%20Application#other-initialization-methods
+
+### Added
+
+- Added the `Application.refresh()` method.
+
+Restarts the `Client` connection to the Discord Gateway by destroying the current connection and reconnecting.
+
+---
+
+- Added the `Application.addIntent()` method.
+
+Adds a new intent to the configuration used during `IDENTIFY`.
+
+---
+
+- Added the `Application.addIntents()` method.
+
+Adds multiple intents to the configuration used during `IDENTIFY`.
+
+---
+
+- Added the `Application.removeIntent()` method.
+
+Removes an intent from the configuration used during `IDENTIFY`.
+
+---
+
+- Added the `Application.clearIntents()` method.
+
+Removes all intents currently configured for `IDENTIFY`.
+
+- **See all documentation in:**
+https://disfox.js.org/docs/disfox/0.1.5/en/Get-Started/Creating%20Application#configuring-intents
+
+---
+
+- Added support for **Option Choices** in `SlashService.Option`.
+
+Choices can now be declared directly through the Disfox API:
+
+```js
+const option = new SlashService.Option("choice")
+    .choices({
+        rock: "rock",
+        paper: "paper",
+        scissors: "scissors"
+    });
+```
+
+Equivalent in `discord.js`:
+
+```js
+.addStringOption(option =>
+    option
+        .addChoices(
+            { name: "rock", value: "rock" },
+            { name: "paper", value: "paper" },
+            { name: "scissors", value: "scissors" }
+        )
+)
+```
+
+- **See all documentation in:**
+https://disfox.js.org/docs/disfox/0.1.5/en/Services/SlashService#adding-options-with-choices
+
 ## [0.1.4] - 2026-10-01
 
 ### Fixed
@@ -35,6 +220,7 @@ channelOption.channelTypes(
 );
 ```
 
+### Added
 - Added the new `SlashService.Option.channelTypes(...types: ChannelType[])` method for configuring the allowed channel types of a channel option.
 
 ## [0.1.3] - 2026-08-14

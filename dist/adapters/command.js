@@ -42,6 +42,10 @@ export function slashModelAdapter(command) {
     if (Array.isArray(commandData.options) && commandData.options.length > 0) {
         for (const option of commandData.options) {
             const optionData = option.data;
+            let djsOpChoices = [];
+            for (const [name, value] of Object.entries(optionData.choices)) {
+                djsOpChoices.push({ name, value });
+            }
             if (typeof optionData.description !== "string") {
                 throw new DisfoxError({
                     "code": DisfoxErrorCode.INVALID_TYPE,
@@ -55,6 +59,15 @@ export function slashModelAdapter(command) {
                     op.setName(optionData.name);
                     op.setDescription(optionData.description);
                     op.setRequired(optionData.required);
+                    op.addChoices(...djsOpChoices.map(c => {
+                        if (!(typeof c.value === 'string')) {
+                            throw new DisfoxError({
+                                code: DisfoxErrorCode.INVALID_TYPE,
+                                message: `Invalid choice. Expected choice type <string>. Received: ${c.value}`
+                            });
+                        }
+                        return { ...c, value: String(c.value) };
+                    }));
                     return op;
                 });
             }
@@ -67,6 +80,15 @@ export function slashModelAdapter(command) {
                         op.setMaxValue(optionData.settings.maxNumber);
                     op.setName(optionData.name);
                     op.setDescription(optionData.description);
+                    op.addChoices(...djsOpChoices.map(c => {
+                        if (!(typeof c.value === 'number')) {
+                            throw new DisfoxError({
+                                code: DisfoxErrorCode.INVALID_TYPE,
+                                message: `Invalid choice. Expected choice type <number>. Received: ${c.value}`
+                            });
+                        }
+                        return { ...c, value: Number(c.value) };
+                    }));
                     return op;
                 });
             }

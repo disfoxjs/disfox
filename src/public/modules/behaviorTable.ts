@@ -1,7 +1,4 @@
-import { DisfoxErrorCode } from "../../private/_disfox.errorCode.js";
-import { DisfoxError } from "../../private/_disfoxerror.js";
 import { Command } from "../structs/slashServiceCommand.js";
-import { SlashService } from "./slash.service.js";
 import {
     OnViolateFields,
     OnExecuteFields,

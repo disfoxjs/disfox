@@ -2,7 +2,6 @@ import fs from 'fs/promises'
 import { constants } from 'fs';
 import { Response } from './response.js';
 
-
 async function exists(path: string) {
     try {
         await fs.access(path, constants.F_OK)

@@ -18,6 +18,7 @@ export class SlashOption {
     #_type: SlashOptions[keyof SlashOptions] | null;
     #required: boolean;
     #settings: SlashInputSettings | Record<string, any>;
+    #_choices: Record<any, any>;
 
     /**
      * Creates an instance of a SlashOption.
@@ -30,6 +31,7 @@ export class SlashOption {
         this.#required = false;
         this.#settings = {};
         this.#settings.channelT = [];
+        this.#_choices = {};
     }
 
     /**
@@ -49,6 +51,16 @@ export class SlashOption {
      */
     public description(description: string): this {
         this.#description = description;
+        return this;
+    }
+
+    /**
+     * Sets the available choices for this option.
+     * @param {Record<any, any>} c - A record containing the choice names and their corresponding values.
+     * @returns {this} The current instance for method chaining.
+     */
+    public choices(c: Record<any, any>): this {
+        this.#_choices = c;
         return this;
     }
 
@@ -93,9 +105,10 @@ export class SlashOption {
      *     ChannelType.GuildVoice
      * );
      */
-    public channelTypes(...t: ChannelType[]): void {
+    public channelTypes(...t: ChannelType[]): this {
         for (const types of t) 
             this.#settings.channelT.push(types);
+        return this;
     }
 
     /**
@@ -108,7 +121,8 @@ export class SlashOption {
             type: this.#_type,
             description: this.#description,
             required: this.#required,
-            settings: this.#settings
+            settings: this.#settings,
+            choices: this.#_choices
         };
     }
 

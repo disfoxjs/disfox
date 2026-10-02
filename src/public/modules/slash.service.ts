@@ -3,8 +3,6 @@ import path from "path";
 import { Command } from "../structs/slashServiceCommand.js";
 import { SlashOption } from "../structs/slashServiceOption.js";
 import { SlashCommand } from "../types/slashTypes.js";
-import { DisfoxError } from "../../private/_disfoxerror.js";
-import { DisfoxErrorCode } from "../../private/_disfox.errorCode.js";
 import { Adapters } from "../../adapters/adapters.js";
 
 interface extractionOptions {
