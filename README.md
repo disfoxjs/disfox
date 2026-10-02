@@ -55,12 +55,8 @@ export default command;
 ```
 
 ```js
-import { Client, GatewayIntentBits, ActivityType, Events } from "discord.js";
+import { ActivityType, Events } from "discord.js";
 import { Application, SlashService } from "disfox";
-
-const client = new Client({
-  intents: [GatewayIntentBits.MessageContent]
-});
 
 const app = new Application("YOUR_TOKEN_HERE"); // or new Application({ token: "YOUR_TOKEN_HERE", intents: [ GatewayIntentBits.GuildMessage ]}).
 
