@@ -15,6 +15,10 @@ import fs from 'fs';
 import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+/**
+ * @deprecated PathManage is deprecated and is no longer supported.
+ * Deprecated since Disfox v0.1.4.
+ */
 export class PathManage {
     constructor() {
         _PathManage_paths.set(this, void 0);

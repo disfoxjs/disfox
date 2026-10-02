@@ -1,1 +1,0 @@
-{"version":3,"file":"messageComponent.d.ts","sourceRoot":"","sources":["../../../src/public/structures/messageComponent.ts"],"names":[],"mappings":"AAAA,OAAO,EAAa,KAAK,EAAE,MAAM,YAAY,CAAC;AAI9C,qBAAa,OAAO;;;IAahB;;OAEG;IACI,MAAM,CAAC,MAAM,EAAE,KAAK,EAAE,GAAI,IAAI;IAgB9B,OAAO,CAAC,OAAO,EAAE,MAAM;IAYvB,KAAK,CAAC,KAAK,EAAE,MAAM;CAa7B"}

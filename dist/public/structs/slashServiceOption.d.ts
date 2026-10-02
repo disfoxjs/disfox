@@ -1,7 +1,9 @@
+import { ChannelType } from "discord.js";
 import { SlashOptions } from "./slashOptions.js";
 interface SlashInputSettings {
     minNumber?: number;
     maxNumber?: number;
+    channelT?: ChannelType[];
 }
 /**
  * Represents an input option for a Discord slash command.
@@ -45,6 +47,19 @@ export declare class SlashOption {
      * @returns {this} The current SlashOption instance for chaining.
      */
     minNumber(number: number): this;
+    /**
+     * Sets the allowed channel types for this option.
+     *
+     * @param {...ChannelType[]} types - The channel types that can be selected.
+     * @returns {void}
+     *
+     * @example
+     * option.channelTypes(
+     *     ChannelType.GuildText,
+     *     ChannelType.GuildVoice
+     * );
+     */
+    channelTypes(...t: ChannelType[]): void;
     /**
      * Retrieves the internal configuration object for this option.
      * @returns {Object} An object containing all configured option properties.

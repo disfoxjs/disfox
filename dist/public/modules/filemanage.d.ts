@@ -1,3 +1,7 @@
+/**
+ * @deprecated FileManage is deprecated and is no longer supported.
+ * Deprecated since Disfox v0.1.4.
+ */
 export declare class FileManage {
     #private;
     constructor();

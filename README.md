@@ -78,7 +78,7 @@ await app.actions.setPresence(
 app.client.on(Events.ClientReady, async () => {
   const command = await SlashService.extractFile("./commands/ping.js");
 
-  await app.slash.deployGlobal([command]);
+  await app.slash.deployGlobal(command);
 
   app.slash.listen({
     onError: {

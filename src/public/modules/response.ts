@@ -1,6 +1,10 @@
 
 import { ErrorContentType, ResponseType } from "../types/responseTypes.js";
 
+/**
+ * @deprecated Response is deprecated and is no longer supported.
+ * Deprecated since Disfox v0.1.4.
+ */
 class Response {
     #success: boolean;
     #content: Record<string, string>

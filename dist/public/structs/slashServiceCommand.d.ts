@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, CommandInteraction, InteractionContextType } from "discord.js";
+import { ChatInputCommandInteraction, InteractionContextType } from "discord.js";
 import { SlashOption } from "./slashServiceOption.js";
 import { SlashTag } from '../types/slashTag.js';
 import { BehaviorTable } from "../modules/behaviorTable.js";
@@ -53,7 +53,7 @@ export declare class Command {
      * @param {(interaction: Interaction) => void} callback - The function to run upon execution.
      * @returns {this} The current Command instance for chaining.
      */
-    action(callback: (interaction: CommandInteraction) => void): this;
+    action(callback: (interaction: ChatInputCommandInteraction) => void): this;
     hasBehaviorT(): boolean;
 }
 //# sourceMappingURL=slashServiceCommand.d.ts.map

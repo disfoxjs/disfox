@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import { Command } from "../structs/slashServiceCommand.js";
 import { SlashOption } from "../structs/slashServiceOption.js";
-import { Adapters } from "../../Adapters/adapters.js";
+import { Adapters } from "../../adapters/adapters.js";
 export class SlashService {
     /**
      * Extracts slash commands from a directory and validates their structure.
@@ -81,7 +81,7 @@ export class SlashService {
         const resolved = path.resolve(filePath);
         const imported = await import(`file://${resolved.replace(/\\/g, "/")}`);
         let COMMAND = imported.default ?? imported;
-        if (COMMAND.cdata?.().isDFXM)
+        if (COMMAND.data?.().isDFXM)
             COMMAND = Adapters.slashModel(COMMAND);
         return [COMMAND];
     }

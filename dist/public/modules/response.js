@@ -10,6 +10,10 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
 var _Response_success, _Response_content, _Response_errorContent, _Response_source;
+/**
+ * @deprecated Response is deprecated and is no longer supported.
+ * Deprecated since Disfox v0.1.4.
+ */
 class Response {
     constructor(source = null) {
         _Response_success.set(this, void 0);

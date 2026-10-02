@@ -12,6 +12,10 @@ async function exists(path: string) {
     }
 }
 
+/**
+ * @deprecated FileManage is deprecated and is no longer supported.
+ * Deprecated since Disfox v0.1.4.
+ */
 export class FileManage {
     #files: Record<string, string>
 

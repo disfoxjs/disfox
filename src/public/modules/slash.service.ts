@@ -5,7 +5,7 @@ import { SlashOption } from "../structs/slashServiceOption.js";
 import { SlashCommand } from "../types/slashTypes.js";
 import { DisfoxError } from "../../private/_disfoxerror.js";
 import { DisfoxErrorCode } from "../../private/_disfox.errorCode.js";
-import { Adapters } from "../../Adapters/adapters.js";
+import { Adapters } from "../../adapters/adapters.js";
 
 interface extractionOptions {
     autoConverts?: boolean;
@@ -118,7 +118,7 @@ export class SlashService {
         const imported = await import(`file://${resolved.replace(/\\/g, "/")}`)
         let COMMAND = imported.default ?? imported
         
-        if (COMMAND.cdata?.().isDFXM) COMMAND = Adapters.slashModel(COMMAND);
+        if (COMMAND.data?.().isDFXM) COMMAND = Adapters.slashModel(COMMAND);
     
         return [COMMAND];
     }

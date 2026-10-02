@@ -1,8 +1,10 @@
+import { ChannelType } from "discord.js";
 import { SlashOptions } from "./slashOptions.js";
 
 interface SlashInputSettings {
     minNumber?: number;
     maxNumber?: number;
+    channelT?: ChannelType[];
 }
 
 /**
@@ -13,7 +15,7 @@ interface SlashInputSettings {
 export class SlashOption {
     #name: string;
     #description: string | null;
-    #type: SlashOptions[keyof SlashOptions] | null;
+    #_type: SlashOptions[keyof SlashOptions] | null;
     #required: boolean;
     #settings: SlashInputSettings | Record<string, any>;
 
@@ -23,10 +25,11 @@ export class SlashOption {
      */
     constructor(name: string) {
         this.#name = name;
-        this.#type = null;
+        this.#_type = null;
         this.#description = null;
         this.#required = false;
         this.#settings = {};
+        this.#settings.channelT = [];
     }
 
     /**
@@ -35,7 +38,7 @@ export class SlashOption {
      * @returns {this} The current SlashOption instance for chaining.
      */
     public type(type: SlashOptions[keyof SlashOptions]): this {
-        this.#type = type;
+        this.#_type = type;
         return this;
     }
 
@@ -78,6 +81,22 @@ export class SlashOption {
         this.#settings.minNumber = number;
         return this;
     }
+    /**
+     * Sets the allowed channel types for this option.
+     *
+     * @param {...ChannelType[]} types - The channel types that can be selected.
+     * @returns {void}
+     *
+     * @example
+     * option.channelTypes(
+     *     ChannelType.GuildText,
+     *     ChannelType.GuildVoice
+     * );
+     */
+    public channelTypes(...t: ChannelType[]): void {
+        for (const types of t) 
+            this.#settings.channelT.push(types);
+    }
 
     /**
      * Retrieves the internal configuration object for this option.
@@ -86,7 +105,7 @@ export class SlashOption {
     public get data() {
         return {
             name: this.#name,
-            type: this.#type,
+            type: this.#_type,
             description: this.#description,
             required: this.#required,
             settings: this.#settings

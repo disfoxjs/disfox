@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, CommandInteraction, InteractionContextType, } from "discord.js";
+import { ChatInputCommandInteraction, InteractionContextType, } from "discord.js";
 import { SlashOption } from "./slashServiceOption.js";
 import { SlashTag } from '../types/slashTag.js';
 import { DisfoxErrorCode } from "../../private/_disfox.errorCode.js";
@@ -9,8 +9,6 @@ import { BehaviorTable } from "../modules/behaviorTable.js";
  * Represents a Discord slash command definition, allowing for fluent configuration
  * of command metadata, options, execution logic, and internal tags.
  */
-
-
 
 export class Command {
     #isDFXM: boolean = true;
@@ -121,7 +119,7 @@ export class Command {
      * @param {(interaction: Interaction) => void} callback - The function to run upon execution.
      * @returns {this} The current Command instance for chaining.
      */
-    public action(callback: (interaction: CommandInteraction) => void): this {
+    public action(callback: (interaction: ChatInputCommandInteraction) => void): this {
         this.#execute = callback;
         return this;
     }

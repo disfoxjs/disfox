@@ -16,7 +16,6 @@ const app = new Application({
     "token": process.env.TK
 })
 
-
 const commands = await SlashService.extractDir('./examples/commands');
 const gamesCommands = await SlashService.extractDir('./examples/games');
 

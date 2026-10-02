@@ -1,5 +1,42 @@
 # Changelog
 
+## [0.1.4] - 2026-10-01
+
+### Fixed
+
+- Fixed issues in `SlashService.extractFile()`.
+- Cleaned up the `/dist` build directory, removing obsolete directories, legacy APIs, duplicated files, and approximately 340 outdated generated files.
+- Fixed the interaction type used by `SlashService.Command.action()`, changing it from `CommandInteraction` to `ChatInputCommandInteraction` from `discord.js`.
+
+### Improved
+
+- Deprecated the `FileManage`, `PathManage`, and `Response` modules.
+> These modules, along with all other deprecated Disfox APIs, are scheduled for removal in a future release.
+- Added support for restricting channel options by Discord channel type in `SlashService.Option`.
+
+```js
+import { ChannelType } from "discord.js";
+import {
+    SlashService,
+    SlashOptions
+} from "disfox";
+
+// Creates a channel option for the slash command.
+const channelOption = new SlashService.Option("channel")
+    .type(SlashOptions.Channel)
+    .description("Select a channel")
+    .required(true);
+
+// Restricts the option to specific Discord channel types.
+channelOption.channelTypes(
+    ChannelType.GuildText,
+    ChannelType.GuildVoice,
+    ChannelType.GuildForum
+);
+```
+
+- Added the new `SlashService.Option.channelTypes(...types: ChannelType[])` method for configuring the allowed channel types of a channel option.
+
 ## [0.1.3] - 2026-08-14
 ### Fixed
 - Fix the NPM disfox website to https://disfox.netlify.app in package.json

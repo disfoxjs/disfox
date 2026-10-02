@@ -125,6 +125,18 @@ export function slashModelAdapter(command: Command): AdaptedResult {
                     return input;
                 })
             }
+
+            if (optionData.type == SlashOptions.Channel) {
+                DJSCommand.addChannelOption(input => {
+                    input.setName(optionData.name).setDescription(optionData.description as string)
+                    input.setRequired(optionData.required)
+                    
+                    if (optionData.settings.channelT?.length > 0) {
+                        input.addChannelTypes(...optionData.settings.channelT)
+                    }
+                    return input;
+                })
+            }
         }
 
     };

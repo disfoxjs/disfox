@@ -1,4 +1,8 @@
 import { ErrorContentType } from "../types/responseTypes.js";
+/**
+ * @deprecated Response is deprecated and is no longer supported.
+ * Deprecated since Disfox v0.1.4.
+ */
 declare class Response {
     #private;
     constructor(source?: any);
