@@ -92,6 +92,7 @@ export class SlashOption {
     channelTypes(...t) {
         for (const types of t)
             this.#settings.channelT.push(types);
+        return this;
     }
     /**
      * Retrieves the internal configuration object for this option.

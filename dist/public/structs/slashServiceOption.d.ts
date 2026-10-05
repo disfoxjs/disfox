@@ -65,7 +65,7 @@ export declare class SlashOption {
      *     ChannelType.GuildVoice
      * );
      */
-    channelTypes(...t: ChannelType[]): void;
+    channelTypes(...t: ChannelType[]): this;
     /**
      * Retrieves the internal configuration object for this option.
      * @returns {Object} An object containing all configured option properties.

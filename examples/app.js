@@ -1,7 +1,7 @@
 import "dotenv/config"
-import { Events, GatewayIntentBits } from "discord.js"
+import { Events } from "discord.js"
 import { SlashService, Application, EventService } from "disfox"
-GatewayIntentBits.
+
 if (!process.env.TK) {
     throw new Error("Token not found in .env")
 }

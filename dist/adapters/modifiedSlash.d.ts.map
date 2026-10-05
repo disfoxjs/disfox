@@ -1,0 +1,1 @@
+{"version":3,"file":"modifiedSlash.d.ts","sourceRoot":"","sources":["../../src/adapters/modifiedSlash.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,mBAAmB,EAAE,MAAM,YAAY,CAAA;AAChD,OAAO,EAAE,aAAa,EAAE,MAAM,oBAAoB,CAAA;AAElD,MAAM,WAAW,2BACjB,SAAQ,mBAAmB;IAEvB,UAAU,CAAC,EAAE;QACT,aAAa,EAAE,aAAa,GAAG,IAAI,CAAA;KACtC,CAAA;CACJ"}

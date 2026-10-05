@@ -1,5 +1,5 @@
 import { ChatInputCommandInteraction } from "discord.js";
-import { modifiedSlashCommandBuilder } from "../../adapters/command.js";
+import { modifiedSlashCommandBuilder } from "../../adapters/modifiedSlash.js";
 interface payload {
     cmd: {
         data: modifiedSlashCommandBuilder;

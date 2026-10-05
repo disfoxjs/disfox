@@ -4,9 +4,9 @@
   </a>
 </p>
 
-<p align="center">
-  <strong>Build Discord apps faster, cleaner, and smarter.</strong>
-</p>
+<h2 align="center">
+  Build applications with real organization and total flexibility.
+</h2>
 
 <p align="center">
   <a href="https://discord.gg/UuZnAuhhP6">
@@ -42,48 +42,29 @@ Only ES Modules (ESM) are supported.
 ### Example usage
 
 ```js
-import { SlashOptions, SlashService, SlashTag } from "disfox";
+import { SlashService } from "disfox";
 
-const command = new SlashService.Command("ping1")
-    .description("replies")
-//  .mark(SlashTag.AdminOnly) // Optional method to enable command tags, defining behavior within the Discord API.
-    .action(interaction => {
-        interaction.reply("Pong!");
+export const command = new SlashService.Command("ping")
+    .description("Replies with Pong!🏓")
+    .action(async interaction => {
+        await interaction.reply("Pong!🏓");
     });
-
-export default command;
 ```
 
 ```js
-import { Client, GatewayIntentBits, ActivityType, Events } from "discord.js";
-import { Application, SlashService } from "disfox";
+import { Events } from "discord.js"
+import { SlashService, Application} from "disfox"
 
-const client = new Client({
-  intents: [GatewayIntentBits.MessageContent]
+const app = new Application("YOUR_TOKEN_HERE");
+
+const commands = await SlashService.extractDir("./examples/commands");
+
+app.client.once(Events.ClientReady, async () => {
+    await app.slash.deployGlobal(commands.valid);
+    app.slash.listen();
 });
 
-const app = new Application("YOUR_TOKEN_HERE"); // or new Application({ token: "YOUR_TOKEN_HERE", intents: [ GatewayIntentBits.GuildMessage ]}).
-
-await app.connect();
-
-await app.actions.setPresence(
-  ActivityType.Playing,
-  "⭐ Ready! /help",
-  "online"
-);
-
-app.client.on(Events.ClientReady, async () => {
-  const command = await SlashService.extractFile("./commands/ping.js");
-
-  await app.slash.deployGlobal(command);
-
-  app.slash.listen({
-    onError: {
-      message: "Error occurred. Try again later.",
-      flags: 64
-    }
-  });
-});
+app.connect();
 ```
 
 **Ready to build with Disfox? [Get Started →](https://disfox.js.org)**

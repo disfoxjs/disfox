@@ -1,21 +1,18 @@
+import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
 import { BehaviorTable, SlashOptions, SlashTag } from "../public/index.js";
 import { Command } from "../public/structs/slashServiceCommand.js";
 import { DisfoxErrorCode } from "../private/_disfox.errorCode.js";
 import { DisfoxError } from "../private/_disfoxerror.js";
-import { APIApplicationCommandOptionChoice, PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
 
-export interface modifiedSlashCommandBuilder
-extends SlashCommandBuilder
-{
-    disfoxData?: {
-        behaviorTable: BehaviorTable | null
-    }
-}
+import { modifiedSlashCommandBuilder } from "./modifiedSlash.js";
+import slashOptionAdapter from "./optionAdapter.js";
 
 interface AdaptedResult {
     data: modifiedSlashCommandBuilder,
     execute: (...args: any[]) => any
 }
+
+
 
 export function slashModelAdapter(command: Command): AdaptedResult {
     
@@ -61,111 +58,8 @@ export function slashModelAdapter(command: Command): AdaptedResult {
         })
     };
 
-    if (Array.isArray(commandData.options) && commandData.options.length > 0) {
-
-        for (const option of commandData.options) {
-            const optionData = option.data
-            let djsOpChoices: APIApplicationCommandOptionChoice[] = [];
-
-            for (const [name, value] of Object.entries(optionData.choices)) {
-                djsOpChoices.push({name, value})
-            }
-                
-            if (typeof optionData.description  !== "string") {
-                throw new DisfoxError({
-                    "code": DisfoxErrorCode.INVALID_TYPE,
-                    "message": `Command description must be of type string. Received value: ${optionData.description}`,
-                    "source": {"body": `SlashService.getDFXFile`},
-                })
-            };
-
-            if (optionData.type === SlashOptions.String) {
-                DJSCommand.addStringOption(op => {
-                    op.setName(optionData.name)
-                    op.setDescription(optionData.description as string)
-                    op.setRequired(optionData.required)
-                    op.addChoices(...djsOpChoices.map(c => {
-                        if (!(typeof c.value === 'string')) {
-                            throw new DisfoxError({
-                                code: DisfoxErrorCode.INVALID_TYPE,
-                                message: `Invalid choice. Expected choice type <string>. Received: ${c.value}`
-                            })
-                        }
-                        return { ...c, value: String(c.value)}
-                    }))
-                    return op;
-                })
-            };
-
-            if (optionData.type === SlashOptions.Number) {
-                DJSCommand.addNumberOption(op => {
-                    if (typeof optionData.settings.minNumber === `number`) op.setMinValue(optionData.settings.minNumber);
-                    if (typeof optionData.settings.maxNumber === `number`) op.setMaxValue(optionData.settings.maxNumber);
-
-                    op.setName(optionData.name)
-                    op.setDescription(optionData.description as string)
-                    op.addChoices(...djsOpChoices.map(c => {
-                        if (!(typeof c.value === 'number')) {
-                            throw new DisfoxError({
-                                code: DisfoxErrorCode.INVALID_TYPE,
-                                message: `Invalid choice. Expected choice type <number>. Received: ${c.value}`
-                            })
-                        }
-                        return { ...c, value: Number(c.value)}
-                    }))
-                    return op;
-                })
-            };
-
-            if (optionData.type == SlashOptions.Mentionable) {
-                DJSCommand.addMentionableOption(input => {
-                    input.setName(optionData.name).setDescription(optionData.description as string)
-                    input.setRequired(optionData.required)
-                    return input;
-                })
-            };
-
-            if (optionData.type == SlashOptions.Boolean) {
-                DJSCommand.addBooleanOption(input => {
-                    input.setName(optionData.name).setDescription(optionData.description as string)
-                    input.setRequired(optionData.required)
-                    return input;
-                })
-            }
-
-            if (optionData.type == SlashOptions.Role) {
-                DJSCommand.addRoleOption(input => {
-                    input.setName(optionData.name).setDescription(optionData.description as string)
-                    input.setRequired(optionData.required)
-                    return input;
-                })
-            }
-
-            if (optionData.type == SlashOptions.Attachment) {
-                DJSCommand.addAttachmentOption(input => {
-                    input.setName(optionData.name).setDescription(optionData.description as string)
-                    input.setRequired(optionData.required)
-                    
-                    return input;
-                })
-            }
-
-            if (optionData.type == SlashOptions.Channel) {
-                DJSCommand.addChannelOption(input => {
-                    input.setName(optionData.name).setDescription(optionData.description as string)
-                    input.setRequired(optionData.required)
-                    
-                    if (optionData.settings.channelT?.length > 0) {
-                        input.addChannelTypes(...optionData.settings.channelT)
-                    }
-                    return input;
-                })
-            }
-
-            
-        }
-
-    };
+    if (Array.isArray(commandData.options) && commandData.options.length > 0)
+        slashOptionAdapter(command, DJSCommand);
 
     if (commandData.tags.length > 0) {
         for (const tag of commandData.tags) {

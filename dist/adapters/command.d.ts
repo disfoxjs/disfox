@@ -1,11 +1,5 @@
-import { BehaviorTable } from "../public/index.js";
 import { Command } from "../public/structs/slashServiceCommand.js";
-import { SlashCommandBuilder } from "discord.js";
-export interface modifiedSlashCommandBuilder extends SlashCommandBuilder {
-    disfoxData?: {
-        behaviorTable: BehaviorTable | null;
-    };
-}
+import { modifiedSlashCommandBuilder } from "./modifiedSlash.js";
 interface AdaptedResult {
     data: modifiedSlashCommandBuilder;
     execute: (...args: any[]) => any;

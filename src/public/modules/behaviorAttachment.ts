@@ -1,5 +1,5 @@
 import { ChatInputCommandInteraction, GuildMember } from "discord.js";
-import { modifiedSlashCommandBuilder } from "../../adapters/command.js";
+import { modifiedSlashCommandBuilder } from "../../adapters/modifiedSlash.js";
 import { DisfoxError } from "../../private/_disfoxerror.js";
 import { DisfoxErrorCode } from "../../private/_disfox.errorCode.js";
 
