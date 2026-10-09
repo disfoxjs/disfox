@@ -1,6 +1,6 @@
 {
   "name": "disfox",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Modern framework for Discord.js with automated structure.",
   "type": "module",
   "main": "dist/index.js",
